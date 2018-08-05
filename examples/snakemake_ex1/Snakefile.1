@@ -1,0 +1,12 @@
+rule link:
+	input: "hello_world.o"
+	output: "hello_world"
+	shell: "cc -o {output} {input}"
+
+rule compile:
+	input: source="hello_world.c", headers=["hello_world.h",]
+	output: "hello_world.o"
+	shell: "cc -c {input.source}"
+
+rule clean:
+	shell: "rm -f hello_world hello_world.o"

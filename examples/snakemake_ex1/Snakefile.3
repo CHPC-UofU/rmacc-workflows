@@ -1,0 +1,42 @@
+configfile: "config.yaml"
+
+shell.executable("/bin/bash")
+
+onstart:
+	# Using the onstart handler to check for prerequisites needed in the
+	# workflow.
+	# Using a rule to do this forces the execution of all the 
+	# rules that would depend upon a prerequisite check rule.
+	import subprocess
+	try:
+		# Check for required modules:
+		shell("module load gcc/4.9.2")
+	except subprocess.CalledProcessError:
+		print("One or more required modules missing.")
+		print("Pre-flight checks failed!")
+		sys.exit(1)
+	else:
+		print("Pre-flight checks OK!")
+
+#localrules: link, compile
+
+rule link:
+	params: compiler=config['compiler']
+	input: "hello_world.o"
+	output: "hello_world"
+	shell: """
+		module load gcc/4.9.2
+		{params.compiler} -o {output} {input}
+		"""
+
+rule compile:
+	params: compiler=config['compiler']
+	input: source="hello_world.c", headers=["hello_world.h",]
+	output: "hello_world.o"
+	shell: """
+		module load gcc/4.9.2
+		{params.compiler} -c {input.source}
+		"""
+
+rule clean:
+	shell: "rm -f hello_world hello_world.o"

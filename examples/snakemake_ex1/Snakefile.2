@@ -1,0 +1,16 @@
+configfile: "config.yaml"
+
+rule link:
+	params: compiler=config['compiler']
+	input: "hello_world.o"
+	output: "hello_world"
+	shell: "{params.compiler} -o {output} {input}"
+
+rule compile:
+	params: compiler=config['compiler']
+	input: source="hello_world.c", headers=["hello_world.h",]
+	output: "hello_world.o"
+	shell: "{params.compiler} -c {input.source}"
+
+rule clean:
+	shell: "rm -f hello_world hello_world.o"

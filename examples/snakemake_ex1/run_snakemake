@@ -1,0 +1,2 @@
+snakemake -s Snakefile.3 --cluster-config cluster.yaml --cluster "sbatch -J '{rule}'" --jobs 20 --latency-wait 40
+#snakemake -s Snakefile.3
