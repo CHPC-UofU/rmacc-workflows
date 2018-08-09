@@ -1,6 +1,6 @@
 # cluster.yaml - cluster configuration for Snakefile.rnaseq
 __default__:
-    partition: notchpeak
-    account: chpc
-    time: 0:20:00
+    partition: shas
+    time: 0:02:00
     nodes: 1
+    qos: debug

@@ -9,6 +9,7 @@ vim: syntax=groovy
 c_files_channel = Channel.fromPath( '*.c' )
 
 process compile {
+	module 'gcc/6.1.0'
 	input: 
 		file c_file from c_files_channel
 	output: 
@@ -16,7 +17,6 @@ process compile {
 
 	script:
 	"""
-	module load gcc/4.9.2
 	gcc -c -g ${c_file}
 	"""
 }

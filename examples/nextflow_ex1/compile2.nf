@@ -11,18 +11,19 @@ params.executable = 'simple_program'
 c_files_channel = Channel.fromPath( '*.c' )
 
 process compile {
+	module 'gcc/6.1.0'
 	input: 
 		file c_file from c_files_channel
 	output: 
 		file '*.o' into o_files_channel
 	script:
 		"""
-		module load gcc/4.9.2
 		gcc -c ${c_file}
 		"""
 }
 
 process link {
+	module 'gcc/6.1.0'
 	input:
 		file '*.o' from o_files_channel.collect()
 	output:
@@ -30,7 +31,6 @@ process link {
 	
 	script:
 		"""
-		module load gcc/4.9.2
 		gcc -o ${params.executable} *.o
 		"""
 }
