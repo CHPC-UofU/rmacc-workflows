@@ -14,7 +14,7 @@ c_files_channel = Channel.fromPath( '*.c' )
 
 // This process compiles each .c file into a .o file.
 process compile {
-	module 'gcc/6.1.0'
+	module 'gcc/4.8.5'
 	input: 
 		file c_file from c_files_channel
 	output: 
@@ -27,7 +27,7 @@ process compile {
 
 // This process links all the .o files into the executable program.
 process link {
-	module 'gcc/6.1.0'
+	module 'gcc/4.8.5'
 	input:
 		// This .collect() method collects all the .o files together.
 		file '*.o' from o_files_channel.collect()

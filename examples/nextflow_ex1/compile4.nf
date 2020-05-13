@@ -13,7 +13,7 @@ params.lnflags = '-g -o'
 // This is the same as compile3.nf, except instead of assigning the channel 
 // to a variable, I just call Channel.fromPath in the input section here:
 process compile {
-	module 'gcc/6.1.0'
+	module 'gcc/4.8.5'
 	input: 
 		file c_file from Channel.fromPath( '*.c' )
 	output: 
@@ -28,7 +28,7 @@ process compile {
 process link {
 	// put the finished file(s) in the current directory:
 	publishDir ".", mode: "copy", overwrite: true
-	module 'gcc/6.1.0'
+	module 'gcc/4.8.5'
 	input:
 		// This collect() method collects all the .o files together:
 		file '*.o' from o_files_channel.collect()

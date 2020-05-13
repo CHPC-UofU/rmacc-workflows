@@ -4,7 +4,7 @@
 vim: syntax=groovy
 */
 
-// Here's a channel for the .c files. It "emits" one .c file's 
+// Here's a channel for the .c files. It emits one .c file's 
 // name at a time.
 c_files_channel = Channel.fromPath( '*.c' )
 
